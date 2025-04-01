@@ -1,2 +1,15 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
+<script>
+  import Highscore from "$lib/components/Highscore.svelte";
+  let { data } = $props();
+</script>
+
+<body>
+  <section>
+    {#each data.lsit as highscore}
+      <Highscore highscoreData={highscore} />
+    {/each}
+  </section>
+  <section id="loginStatus">
+    <p id="userStatus">Gäst</p>
+  </section>
+</body>
