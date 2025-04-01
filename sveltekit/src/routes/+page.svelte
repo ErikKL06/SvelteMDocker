@@ -1,14 +1,6 @@
 <script>
   import Highscore from "$lib/components/Highscore.svelte";
-  async function getAllHighscores() {
-    const url = "http://localhost/api/getAllHighscores.php";
-
-    const response = await fetch(url);
-
-    const list = await response.json();
-    return { list };
-  }
-  let highscores = getAllHighscores();
+  let { data } = $props();
 </script>
 
 <section id="highscore">
@@ -20,11 +12,9 @@
       </tr>
     </thead>
     <tbody>
-      {#await highscores then highscoreList}
-        {#each highscoreList.list as userData}
-          <Highscore HighscoresData={userData} />
-        {/each}
-      {/await}
+      {#each data.list as userData}
+        <Highscore HighscoresData={userData} />
+      {/each}
     </tbody>
   </table>
 </section>
