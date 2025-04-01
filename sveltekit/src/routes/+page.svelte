@@ -5,7 +5,7 @@
 
 <body>
   <section>
-    {#each data.lsit as highscore}
+    {#each data.list as highscore}
       <Highscore highscoreData={highscore} />
     {/each}
   </section>

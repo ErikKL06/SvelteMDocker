@@ -1,10 +1,7 @@
 export async function load() {
 
-      const response = await fetch("localhost/api/getAllHighscores.php");
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
+      const response = await fetch("http://localhost/api/getAllHighscores.php");
   
       const list = await response.json();
-      return list;
+      return { list };
   }

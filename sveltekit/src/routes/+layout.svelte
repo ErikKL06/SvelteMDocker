@@ -2,4 +2,7 @@
   import Game from "$lib/components/Game.svelte";
 </script>
 
-<Game />
+<main>
+  <Game />
+  <slot />
+</main>
