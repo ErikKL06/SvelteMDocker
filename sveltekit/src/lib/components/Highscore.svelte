@@ -1,14 +1,8 @@
 <script>
-  let { highscoreData } = $props();
+  let { HighscoresData } = $props();
 </script>
 
-<section id="highscore">
-  <table id="highscoreTable">
-    <tbody>
-      <tr>
-        <td>{highscoreData.username}</td>
-        <td>{highscoreData.highscore}</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
+<tr>
+  <td>{HighscoresData.username}</td>
+  <td>{HighscoresData.highscore}</td>
+</tr>
