@@ -76,9 +76,9 @@
   }
 
   onMount(() => {
-    snakeHead = new Image();
-    foodImage = new Image();
-    snakeBodyImage = new Image();
+    let snakeHead = new Image();
+    let foodImage = new Image();
+    let snakeBodyImage = new Image();
     // Variabel till spelplanen
 
     context = board.getContext("2d");
