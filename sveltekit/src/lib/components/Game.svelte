@@ -25,10 +25,6 @@
   let foodX;
   let foodY;
 
-  let snakeHead = new Image();
-  let foodImage = new Image();
-  let snakeBodyImage = new Image();
-
   //boolean för att kolla om spelet är över
   let gameOver = false;
 
@@ -80,6 +76,9 @@
   }
 
   onMount(() => {
+    snakeHead = new Image();
+    foodImage = new Image();
+    snakeBodyImage = new Image();
     // Variabel till spelplanen
 
     context = board.getContext("2d");
