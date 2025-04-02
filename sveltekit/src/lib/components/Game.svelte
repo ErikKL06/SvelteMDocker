@@ -25,6 +25,10 @@
   let foodX;
   let foodY;
 
+  let snakeHead = new Image();
+  let foodImage = new Image();
+  let snakeBodyImage = new Image();
+
   //boolean för att kolla om spelet är över
   let gameOver = false;
 
@@ -69,26 +73,33 @@
     }
   }
 
+  function loadimages() {
+    snakeHead.src = "head.png";
+    foodImage.src = "IdasApple.png";
+    snakeBodyImage.src = "Sbody.png";
+  }
+
   onMount(() => {
     // Variabel till spelplanen
-    board = document.getElementById("board");
+
     context = board.getContext("2d");
+
     getUsername();
     fetchAllHighscores();
 
     //lägger in maten
     placeFood();
 
-    // händelselyssnare för att styra ormen
-    document.addEventListener("keyup", changeDirection);
+    // Initialize the game with a blank board until images load
+    rensaBoard();
+    renderGrid();
+    loadimages();
 
-    // Starta animationsloopen med requestAnimationFrame
+    // Note: No need to add event listener here since you're using <svelte:window>
+
     requestAnimationFrame(gameLoop);
-
-    // Cleanup function that runs when component is destroyed
     return () => {
-      document.removeEventListener("keyup", changeDirection);
-      // Cancel any other timers or animations if needed
+      // Any cleanup needed when component is destroyed
     };
   });
 
@@ -110,10 +121,12 @@
 
   function getUsername() {
     // Logic to get username
+    console.log("Username fetched");
   }
 
   function fetchAllHighscores() {
     // Logic to fetch highscores
+    console.log("Highscores fetched");
   }
 
   function gameLoop(timestamp) {
@@ -168,7 +181,6 @@
     if (snakeX === foodX && snakeY === foodY) {
       snakeBody.push([foodX, foodY]);
       gamescore.value++;
-      document.getElementById("score").innerHTML = `Score: ${gamescore}`;
       placeFood();
     }
   }
@@ -240,11 +252,12 @@
     gameOver = false;
     placeFood();
     gamescore.value = 0;
-    document.getElementById("score").innerHTML = `Score: ${gamescore}`;
   }
 </script>
 
-<canvas id="board" width="450" height="450">
+<svelte:window on:keyup={changeDirection} />
+
+<canvas id="board" width="450" height="450" bind:this={board}>
   Din webbläsare stödjer inte HTML5 canvas tag.
 </canvas>
 <section id="scores">
