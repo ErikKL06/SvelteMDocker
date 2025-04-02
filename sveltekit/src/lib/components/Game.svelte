@@ -39,6 +39,9 @@
   //variabel för att vrida huvudet
   let rotationVinkel = 0;
 
+  //variabel för att kolla om du har ändrat position redan på samma ruta
+  let directionChanged = false;
+
   // Variabler för requestAnimationFrame timing
   let lastTime = 0;
   let frameInterval = 1000 / 6; // Samma som setInterval timing (6 FPS)
@@ -46,10 +49,13 @@
 
   // Function to change direction
   function changeDirection(e) {
+    if (directionChanged) return; //hindrar att kunna ändra håll på samma ruta
+
     if ((e.code === "ArrowUp" || e.code === "KeyW") && velocityY !== 1) {
       velocityX = 0;
       velocityY = -1;
       rotationVinkel = 0;
+      directionChanged = true;
     } else if (
       (e.code === "ArrowDown" || e.code === "KeyS") &&
       velocityY !== -1
@@ -57,6 +63,7 @@
       velocityX = 0;
       velocityY = 1;
       rotationVinkel = 180;
+      directionChanged = true;
     } else if (
       (e.code === "ArrowLeft" || e.code === "KeyA") &&
       velocityX !== 1
@@ -64,6 +71,7 @@
       velocityX = -1;
       velocityY = 0;
       rotationVinkel = 270;
+      directionChanged = true;
     } else if (
       (e.code === "ArrowRight" || e.code === "KeyD") &&
       velocityX !== -1
@@ -71,6 +79,7 @@
       velocityX = 1;
       velocityY = 0;
       rotationVinkel = 90;
+      directionChanged = true;
     }
   }
 
@@ -158,6 +167,7 @@
     updateraOrmPos();
     ritaOrm();
     kollaGameOver();
+    directionChanged = false; // Återställer riktningsändringsflaggan
   }
 
   function rensaBoard() {
