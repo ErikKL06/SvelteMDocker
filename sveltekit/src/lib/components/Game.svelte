@@ -25,6 +25,11 @@
   let foodX;
   let foodY;
 
+  //bilder
+  let snakeHead;
+  let foodImage;
+  let snakeBodyImage;
+
   //boolean för att kolla om spelet är över
   let gameOver = false;
 
@@ -70,15 +75,15 @@
   }
 
   function loadimages() {
+    snakeHead = new Image();
+    foodImage = new Image();
+    snakeBodyImage = new Image();
     snakeHead.src = "head.png";
     foodImage.src = "IdasApple.png";
     snakeBodyImage.src = "Sbody.png";
   }
 
   onMount(() => {
-    let snakeHead = new Image();
-    let foodImage = new Image();
-    let snakeBodyImage = new Image();
     // Variabel till spelplanen
 
     context = board.getContext("2d");
