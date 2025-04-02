@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { gamescore } from "/src/lib/stores/gamescore.svelte.js";
+  import { UserHighscore } from "/src/lib/stores/UserHighscore.svelte.js";
 
   //spelplan
   let blockSize = 30;
@@ -33,3 +34,8 @@
 <canvas id="board" width="450rem" height="450rem">
   Din webbläsare stödjer inte HTML5 canvas tag.
 </canvas>
+<section id="scores">
+  <p>Score: {gamescore}</p>
+  <p>AvgScore:</p>
+  <h1>Highscore: {UserHighscore.value}</h1>
+</section>

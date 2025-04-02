@@ -23,11 +23,6 @@
       {/each}
     </tbody>
   </table>
-  <section id="scores">
-    <p>Score:</p>
-    <p>AvgScore</p>
-    <h1>Highscore:</h1>
-  </section>
 </section>
 <section id="loginStatus">
   <p id="userStatus">Gäst</p>

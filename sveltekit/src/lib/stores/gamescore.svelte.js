@@ -1,2 +1,2 @@
 // gamescore.svelte.js
-export let gamescore = $state({ value: 0 });
+export let gamescore = $state(0 );
