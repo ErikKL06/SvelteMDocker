@@ -9,7 +9,7 @@
   let cols = 15;
   let board;
   let context;
-
+  ("");
   //ormens huvud
   let snakeX = blockSize * 5;
   let snakeY = blockSize * 5;
@@ -87,9 +87,9 @@
     snakeHead = new Image();
     foodImage = new Image();
     snakeBodyImage = new Image();
-    snakeHead.src = "head.png";
-    foodImage.src = "IdasApple.png";
-    snakeBodyImage.src = "Sbody.png";
+    snakeHead.src = "/head.png";
+    foodImage.src = "/IdasApple.png";
+    snakeBodyImage.src = "/Sbody.png";
   }
 
   onMount(() => {
