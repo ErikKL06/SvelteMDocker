@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      {#each data.list as userData}
+      {#each data as userData}
         <Highscore HighscoresData={userData} />
       {/each}
     </tbody>
