@@ -2,7 +2,18 @@
   import Game from "$lib/components/Game.svelte";
   import Highscore from "$lib/components/Highscore.svelte";
 
-  let { data } = $props();
+  //let { data } = $props();
+
+  export async function highscores() {
+    // If PHP is on the host machine, use host.docker.internal
+    const url = "/api/getAllHighscores.php";
+    // Alternative: If PHP is in another container, use the container name
+    //const url = "http://php-container/api/getAllHighscores.php";
+
+    const response = await fetch(url);
+
+    return await response.json();
+  }
 </script>
 
 <section id="game-container">
@@ -18,9 +29,11 @@
       </tr>
     </thead>
     <tbody>
-      {#each data as userData}
-        <Highscore HighscoresData={userData} />
-      {/each}
+      {#await highscores then userData}
+        {#each data as userData}
+          <Highscore HighscoresData={userData} />
+        {/each}
+      {/await}
     </tbody>
   </table>
 </section>
