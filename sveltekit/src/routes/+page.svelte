@@ -6,6 +6,7 @@
   import { auth } from "$lib/shared/auth.js";
   import { onMount } from "svelte";
   import LoginStatus from "$lib/components/LoginStatus.svelte";
+  import LoginButtons from "$lib/components/LoginButtons.svelte";
 
   async function highscores() {
     // If PHP is on the host machine, use host.docker.internal
@@ -52,4 +53,5 @@
 </section>
 <section id="loginStatus">
   <LoginStatus />
+  <LoginButtons />
 </section>
