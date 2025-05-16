@@ -10,7 +10,7 @@
     });
 
     let result = await response.json();
-    if (result == true) {
+    if (result.success == true) {
       window.location.href = "/login";
     } else {
       alert("Registrering misslyckades");

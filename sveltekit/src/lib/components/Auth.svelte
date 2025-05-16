@@ -7,6 +7,7 @@
   });
 
   const state = $state({
+    //!ÄNDRA NAMNEN PÅ VARIABLERNA
     userData: null,
   });
 
@@ -26,7 +27,7 @@
 
     state.userData = await response.json();
 
-    if (state.userData.success === true) {
+    if (state.userData.success == true) {
       user.auth = true;
       user.userData = {
         username: state.userData.username,

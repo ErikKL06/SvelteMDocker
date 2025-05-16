@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
+$result = ['success' => false]; // Initialize result with default value
+
 if (isset($_POST['email'], $_POST['userName'], $_POST['pwd'])) {
     include('../../model/dbFunctions.php');
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);

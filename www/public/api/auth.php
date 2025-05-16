@@ -11,7 +11,7 @@
 session_start();
 
 include('../../model/dbFunctions.php');
-
+$jsonData = json_decode(file_get_contents('php://input'), true);
 
 if (isset($_SESSION['uid'])) {
     $user = [
@@ -20,12 +20,10 @@ if (isset($_SESSION['uid'])) {
         'username' => $_SESSION['username'],
         'email' => $_SESSION['email']
     ];
-} elseif (isset($_POST['password'], $_POST['user'])) {
-    $user = filter_input(INPUT_POST, 'user', FILTER_UNSAFE_RAW);
-    //$pwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $pwd = $_POST['password'];
+} elseif (isset($jsonData['password'], $jsonData['username'])) {
+    $user = filter_var($jsonData['username'], FILTER_UNSAFE_RAW);
+    $pwd = $jsonData['password'];
     $user = auth($user, $pwd);
-
 
     /** Kontroll att resultat finns */
     if ($user['success']) {

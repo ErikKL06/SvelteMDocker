@@ -25,14 +25,15 @@ function addUser($email, $user, $pwd)
   /* Bygger upp sql frågan */
   $stmt = $db->prepare("INSERT INTO users(uid, username, email, password) VALUES(UUID(), :user, :fn, :pwd)"); /* inanför prepare är sql frågan */
 
+  $result['success'] = false;
   $stmt->bindValue(":user", $user);
   $stmt->bindValue(":fn", $email);
   $stmt->bindValue(":pwd", $pwd);
 
-  if ($stmt->execute())
-    return true;
-  else
-    return false;
+  if ($stmt->execute()) {
+    $result['success'] = true;
+  }
+  return $result;
 }
 
 function getHighscore($uid)
