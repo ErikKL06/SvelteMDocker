@@ -9,7 +9,12 @@
       body: data,
     });
 
-    result = await response.json();
+    let result = await response.json();
+    if (result == true) {
+      window.location.href = "/login";
+    } else {
+      alert("Registrering misslyckades");
+    }
   }
 </script>
 

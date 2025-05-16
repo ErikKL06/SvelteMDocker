@@ -12,6 +12,11 @@
     });
 
     userData = await response.json();
+    if (userData["success"] == true) {
+      window.location.href = "/";
+    } else {
+      alert("Inloggning misslyckades");
+    }
   }
 </script>
 
