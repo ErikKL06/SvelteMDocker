@@ -47,6 +47,8 @@
     </tbody>
   </table>
 </section>
-<section id="loginStatus">
-  <p id="userStatus">{#await currentUser then currentUser}</p>
-</section>
+{#await getUser() then currentUser}
+  <section id="loginStatus">
+    <p id="userStatus">{currentUser}</p>
+  </section>
+{/await}
