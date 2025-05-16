@@ -1,7 +1,5 @@
 <script>
   import { onMount } from "svelte";
-  import { gamescore } from "/src/lib/stores/gamescore.svelte.js";
-  import { UserHighscore } from "/src/lib/stores/UserHighscore.svelte.js";
 
   //spelplan
   let blockSize = 30;
@@ -9,7 +7,6 @@
   let cols = 15;
   let board;
   let context;
-  ("");
   //ormens huvud
   let snakeX = blockSize * 5;
   let snakeY = blockSize * 5;
@@ -33,9 +30,6 @@
   //boolean för att kolla om spelet är över
   let gameOver = false;
 
-  //variabel för att kolla vem som är inloggad
-  let userLoggedIn = "";
-
   //variabel för att vrida huvudet
   let rotationVinkel = 0;
 
@@ -46,6 +40,9 @@
   let lastTime = 0;
   let frameInterval = 1000 / 6; // Samma som setInterval timing (6 FPS)
   let accumulator = 0;
+
+  let highscore = $state();
+  let gamescore = $state(0);
 
   // Function to change direction
   function changeDirection(e) {
@@ -92,13 +89,17 @@
     snakeBodyImage.src = "/Sbody.png";
   }
 
-  onMount(() => {
+  onMount(async () => {
+    // Make onMount async
     // Variabel till spelplanen
+    try {
+      highscore = await fetchHighscore(); // Await the promise
+    } catch (error) {
+      console.error("Failed to fetch highscore:", error);
+      highscore = 0; // Set a default value on error
+    }
 
     context = board.getContext("2d");
-
-    getUsername();
-    fetchAllHighscores();
 
     //lägger in maten
     placeFood();
@@ -130,16 +131,6 @@
         }
       }
     }
-  }
-
-  function getUsername() {
-    // Logic to get username
-    console.log("Username fetched");
-  }
-
-  function fetchAllHighscores() {
-    // Logic to fetch highscores
-    console.log("Highscores fetched");
   }
 
   function gameLoop(timestamp) {
@@ -194,7 +185,7 @@
   function checkFood() {
     if (snakeX === foodX && snakeY === foodY) {
       snakeBody.push([foodX, foodY]);
-      gamescore.value++;
+      gamescore++;
       placeFood();
     }
   }
@@ -245,12 +236,20 @@
       snakeY >= rows * blockSize
     ) {
       gameOver = true;
+      if (gamescore > highscore) {
+        highscore = gamescore;
+      }
+      highscoreupdate();
       alert("Game Over");
       restart();
     }
     for (let i = 0; i < snakeBody.length; i++) {
       if (snakeX === snakeBody[i][0] && snakeY === snakeBody[i][1]) {
         gameOver = true;
+        if (gamescore > highscore) {
+          highscore = gamescore;
+        }
+        highscoreupdate();
         alert("Game Over");
         restart();
       }
@@ -265,7 +264,28 @@
     snakeBody = [];
     gameOver = false;
     placeFood();
-    gamescore.value = 0;
+    gamescore = 0; // Corrected: Direct assignment for Svelte 5 rune
+  }
+
+  async function fetchHighscore() {
+    const response = await fetch("/api/getHighscore.php");
+    const result = await response.json();
+
+    return result;
+  }
+
+  async function highscoreupdate() {
+    const response = await fetch("/api/setHighscore.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        highscore: gamescore,
+      }),
+    });
+    const result = await response.json();
+    return result;
   }
 </script>
 
@@ -275,7 +295,7 @@
   Din webbläsare stödjer inte HTML5 canvas tag.
 </canvas>
 <section id="scores">
-  <p>Score: {gamescore.value}</p>
+  <p>Score: {gamescore}</p>
   <p>AvgScore:</p>
-  <h1>Highscore: {UserHighscore.value}</h1>
+  <h1>Highscore: {highscore}</h1>
 </section>
