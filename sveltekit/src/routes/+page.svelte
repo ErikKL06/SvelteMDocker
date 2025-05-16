@@ -2,6 +2,7 @@
   import Game from "$lib/components/Game.svelte";
   import Highscore from "$lib/components/Highscore.svelte";
 
+  let currentUser = $state(getUser());
   async function highscores() {
     // If PHP is on the host machine, use host.docker.internal
     const url = "/api/getAllHighscores.php";
@@ -10,6 +11,13 @@
 
     const response = await fetch(url);
 
+    return await response.json();
+  }
+
+  async function getUser() {
+    const url = "/api/currentUserAPI.php";
+    const response = await fetch(url);
+    //currentUser = await response.json();
     return await response.json();
   }
 </script>
@@ -40,5 +48,5 @@
   </table>
 </section>
 <section id="loginStatus">
-  <p id="userStatus">Gäst</p>
+  <p id="userStatus">{#await currentUser then currentUser}</p>
 </section>
