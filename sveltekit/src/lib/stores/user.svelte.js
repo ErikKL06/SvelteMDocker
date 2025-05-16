@@ -1,0 +1,1 @@
+export const user = $state({"auth": false, "userData": null });

@@ -1,4 +1,5 @@
 <script>
+  import { user } from "$lib/stores/user.svelte.js";
   let userData = $state({});
 
   async function auth(e) {
@@ -13,6 +14,7 @@
 
     userData = await response.json();
     if (userData["success"] == true) {
+      //spara i storen
       window.location.href = "/";
     } else {
       alert("Inloggning misslyckades");
