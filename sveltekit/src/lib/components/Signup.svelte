@@ -1,4 +1,9 @@
 <script>
+  const form = $state({
+    username: "",
+    password: "",
+    email: "",
+  });
   async function adduser(e) {
     e.preventDefault();
     const data = new FormData(e.target);
@@ -6,12 +11,16 @@
 
     const response = await fetch(url, {
       method: "post",
-      body: data,
+      body: JSON.stringify({
+        username: form.username,
+        password: form.password,
+        email: form.email,
+      }),
     });
 
     let result = await response.json();
     if (result.success == true) {
-      window.location.href = "/login";
+      await goto("/login");
     } else {
       alert("Registrering misslyckades");
     }
@@ -21,15 +30,36 @@
 <form method="post" onsubmit={adduser}>
   <label for="email">Email:</label>
   <br />
-  <input type="text" name="email" id="email" required size="50" />
+  <input
+    type="text"
+    bind:value={form.email}
+    name="email"
+    id="email"
+    required
+    size="50"
+  />
   <br />
   <label for="username">Användarnamn:</label>
   <br />
-  <input type="text" name="userName" id="userName" required size="50" />
+  <input
+    type="text"
+    bind:value={form.username}
+    name="userName"
+    id="userName"
+    required
+    size="50"
+  />
   <br />
   <label for="password">Lösenord:</label>
   <br />
-  <input type="password" name="pwd" id="pwd" required size="50" />
+  <input
+    type="password"
+    bind:value={form.password}
+    name="pwd"
+    id="pwd"
+    required
+    size="50"
+  />
   <br />
 
   <input class="submit" type="submit" value="Registrera" />

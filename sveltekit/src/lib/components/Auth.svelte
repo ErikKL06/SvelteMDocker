@@ -1,5 +1,6 @@
 <script>
   import { user } from "$lib/stores/user.svelte.js";
+  import { goto } from "$app/navigation"; // Import goto
 
   const form = $state({
     username: "",
@@ -34,8 +35,11 @@
         uid: state.userData.uid,
         email: state.userData.email,
       };
-
-      window.location.href = "/";
+      console.log(
+        "Auth.svelte - user store updated:",
+        JSON.parse(JSON.stringify(user))
+      ); // For debugging
+      await goto("/"); // Use goto instead of window.location.href
     } else {
       alert("Inloggning misslyckades");
     }

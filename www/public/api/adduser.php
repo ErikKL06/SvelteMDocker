@@ -2,12 +2,14 @@
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
 $result = ['success' => false]; // Initialize result with default value
+$jsonData = json_decode(file_get_contents('php://input'), true);
 
-if (isset($_POST['email'], $_POST['userName'], $_POST['pwd'])) {
+if (isset($jsonData['email'], $jsonData['username'], $jsonData['password'])) {
     include('../../model/dbFunctions.php');
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_SPECIAL_CHARS);
-    $user = filter_input(INPUT_POST, 'userName', FILTER_SANITIZE_SPECIAL_CHARS);
-    $pwd = password_hash($_POST['pwd'], PASSWORD_DEFAULT);
-    $result = addUser($email, $user, $pwd);
+    // Use $jsonData instead of filter_input
+    $email = htmlspecialchars($jsonData['email']);
+    $user = htmlspecialchars($jsonData['username']);
+    $pwd = password_hash($jsonData['password'], PASSWORD_DEFAULT);
+    $result['success'] = addUser($email, $user, $pwd);
 }
 echo json_encode($result, JSON_UNESCAPED_UNICODE);

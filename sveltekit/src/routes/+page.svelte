@@ -2,7 +2,10 @@
   import Game from "$lib/components/Game.svelte";
   import { user } from "$lib/stores/user.svelte.js";
   import Highscore from "$lib/components/Highscore.svelte";
+  import { goto, afterNavigate } from "$app/navigation";
+  import { auth } from "$lib/shared/auth.js";
   import { onMount } from "svelte";
+  import LoginStatus from "$lib/components/LoginStatus.svelte";
 
   async function highscores() {
     // If PHP is on the host machine, use host.docker.internal
@@ -14,6 +17,12 @@
 
     return await response.json();
   }
+
+  afterNavigate(async () => {
+    const response = await auth();
+    user.auth = response.auth;
+    user.userData = response.userData;
+  });
 </script>
 
 <section id="game-container">
@@ -42,5 +51,5 @@
   </table>
 </section>
 <section id="loginStatus">
-  <p id="userStatus">{user.userData}</p>
+  <LoginStatus />
 </section>
