@@ -1,20 +1,39 @@
 <script>
   import { user } from "$lib/stores/user.svelte.js";
-  let userData = $state({});
 
-  async function auth(e) {
+  const form = $state({
+    username: "",
+    password: "",
+  });
+
+  const state = $state({
+    userData: null,
+  });
+
+  async function handleAuth(e) {
     e.preventDefault();
-    const data = new FormData(e.target);
-    const url = "/api/auth.php";
 
-    const response = await fetch(url, {
-      method: "post",
-      body: data,
+    const response = await fetch("/api/auth.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: form.username,
+        password: form.password,
+      }),
     });
 
-    userData = await response.json();
-    if (userData["success"] == true) {
-      //spara i storen
+    state.userData = await response.json();
+
+    if (state.userData.success === true) {
+      user.auth = true;
+      user.userData = {
+        username: state.userData.username,
+        uid: state.userData.uid,
+        email: state.userData.email,
+      };
+
       window.location.href = "/";
     } else {
       alert("Inloggning misslyckades");
@@ -22,18 +41,30 @@
   }
 </script>
 
-<form method="post" onsubmit={auth}>
-  <label for="user">Username:</label>
-  <br />
-  <input type="text" name="user" required size="50" />
-  <br />
-  <label for="password">Password:</label>
-  <br />
-  <input type="password" name="password" required size="50" /><br />
+<form onsubmit={handleAuth}>
+  <label for="user">Username:</label><br />
+  <input
+    type="text"
+    bind:value={form.username}
+    name="user"
+    required
+    size="50"
+  /><br />
+
+  <label for="password">Password:</label><br />
+  <input
+    type="password"
+    bind:value={form.password}
+    name="password"
+    required
+    size="50"
+  /><br />
+
   <input type="submit" value="Logga in" />
 </form>
-{#if userData["success"] == true}
-  <p id="userStatus">Inloggad som {userData["username"]}</p>
+
+{#if state.userData?.success}
+  <p id="userStatus">Inloggad som {state.userData.username}</p>
 {:else}
   <p id="userStatus">Gäst</p>
 {/if}

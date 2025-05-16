@@ -13,8 +13,14 @@ session_start();
 include('../../model/dbFunctions.php');
 
 
-
-if (isset($_POST['password'], $_POST['user'])) {
+if (isset($_SESSION['uid'])) {
+    $user = [
+        'success' => true,
+        'uid' => $_SESSION['uid'],
+        'username' => $_SESSION['username'],
+        'email' => $_SESSION['email']
+    ];
+} elseif (isset($_POST['password'], $_POST['user'])) {
     $user = filter_input(INPUT_POST, 'user', FILTER_UNSAFE_RAW);
     //$pwd = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $pwd = $_POST['password'];
@@ -28,7 +34,15 @@ if (isset($_POST['password'], $_POST['user'])) {
         $_SESSION['username'] = $user['username'];
         $_SESSION['email'] = $user['email'];
     }
+} else {
+    $user = [
+        'success' => false,
+        'uid' => null,
+        'username' => null,
+        'email' => null
+    ];
 }
+
 
 header('Content-Type: application/json');
 echo json_encode($user, JSON_UNESCAPED_UNICODE);

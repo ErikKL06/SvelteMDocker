@@ -1,9 +1,9 @@
 <script>
   import Game from "$lib/components/Game.svelte";
+  import { user } from "$lib/stores/user.svelte.js";
   import Highscore from "$lib/components/Highscore.svelte";
   import { onMount } from "svelte";
 
-  let currentUser = $state();
   async function highscores() {
     // If PHP is on the host machine, use host.docker.internal
     const url = "/api/getAllHighscores.php";
@@ -42,5 +42,5 @@
   </table>
 </section>
 <section id="loginStatus">
-  <p id="userStatus"></p>
+  <p id="userStatus">{user.userData}</p>
 </section>

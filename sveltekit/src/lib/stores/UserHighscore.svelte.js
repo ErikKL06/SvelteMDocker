@@ -1,3 +1,4 @@
+//!LÖS SÅ ATT FUNKTIONEN LIGGER I ANNAN FIL
 let UserHighscore = $state({value: null});
 
 async function fetchHighscore() {

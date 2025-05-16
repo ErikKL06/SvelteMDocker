@@ -4,7 +4,7 @@
  * @returns "auth": true/false,"userdata": {"uid": ..., "firstname": ..., "surname": ...}
  */
 export async function auth() {
-    let result = {"auth": false, "userdata": null};
+    let result = {"auth": false, "userData": null};
  
     try {
        const response = await fetch("/api/auth.php");
