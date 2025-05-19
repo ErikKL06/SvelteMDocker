@@ -59,13 +59,14 @@
 </section>
 
 <style>
-  :global(html), :global(body) {
+  :global(html),
+  :global(body) {
     min-height: 100vh;
     height: 100%;
     margin: 0;
     padding: 0;
     background: #b7c7a3;
-    font-family: 'Georgia', serif;
+    font-family: "Georgia", serif;
     width: 100%;
     max-width: 100vw;
     overflow: hidden;
@@ -103,7 +104,8 @@
     border: 3px solid #3a5a40;
     overflow: hidden;
   }
-  #highscoreTable th, #highscoreTable td {
+  #highscoreTable th,
+  #highscoreTable td {
     padding: 8px 16px;
     border-bottom: 1px solid #3a5a40;
     text-align: left;
