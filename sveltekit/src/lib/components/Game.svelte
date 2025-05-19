@@ -291,7 +291,7 @@
 
 <svelte:window on:keyup={changeDirection} />
 
-<canvas id="board" width="450" height="450" bind:this={board}>
+<canvas id="board" width="450" height="450" bind:this={board} class="game-board">
   Din webbläsare stödjer inte HTML5 canvas tag.
 </canvas>
 <section id="scores">
@@ -299,3 +299,14 @@
   <p>AvgScore:</p>
   <h1>Highscore: {highscore}</h1>
 </section>
+
+<style>
+  .game-board {
+    background: #588157;
+    border: 3px solid #3a5a40;
+    border-radius: 10px;
+    box-shadow: 2px 2px 8px #3a5a40;
+    margin: 0 auto;
+    display: block;
+  }
+</style>

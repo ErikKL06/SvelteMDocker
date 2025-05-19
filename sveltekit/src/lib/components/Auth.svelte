@@ -47,29 +47,71 @@
 </script>
 
 <form onsubmit={handleAuth}>
-  <label for="user">Username:</label><br />
+  <label for="user">Username:</label>
   <input
     type="text"
     bind:value={form.username}
     name="user"
     required
     size="50"
-  /><br />
+  />
 
-  <label for="password">Password:</label><br />
+  <label for="password">Password:</label>
   <input
     type="password"
     bind:value={form.password}
     name="password"
     required
     size="50"
-  /><br />
+  />
 
   <input type="submit" value="Logga in" />
 </form>
 
-{#if state.userData?.success}
-  <p id="userStatus">Inloggad som {state.userData.username}</p>
-{:else}
-  <p id="userStatus">Gäst</p>
-{/if}
+<style>
+  form {
+    background: #b7c7a3;
+    border-radius: 12px;
+    box-shadow: 2px 2px 8px #3a5a40;
+    max-width: 400px;
+    margin: 30px auto;
+    padding: 32px 28px 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  label {
+    font-size: 1.1em;
+    margin-bottom: 2px;
+    color: #222;
+  }
+  input[type="text"],
+  input[type="password"] {
+    border: 1px solid #3a5a40;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 1em;
+    background: #e9f5db;
+    margin-bottom: 10px;
+  }
+  input[type="submit"] {
+    background: #588157;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-size: 1em;
+    font-family: "Georgia", serif;
+    font-weight: bold;
+    box-shadow: 1px 1px 4px #3a5a40;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.1s;
+    margin-top: 10px;
+  }
+  input[type="submit"]:hover {
+    background: #3a5a40;
+    transform: translateY(-2px) scale(1.03);
+  }
+</style>
