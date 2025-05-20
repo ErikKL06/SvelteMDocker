@@ -1,4 +1,6 @@
 <script>
+  import { highscoresFetch } from "$lib/shared/highscoresFetch.js";
+  import { highscores } from "$lib/stores/highscores.svelte.js";
   import { onMount } from "svelte";
 
   //spelplan
@@ -263,8 +265,14 @@
     velocityY = 0;
     snakeBody = [];
     gameOver = false;
+    fetchAllhighscores();
     placeFood();
     gamescore = 0; // Corrected: Direct assignment for Svelte 5 rune
+  }
+
+  async function fetchAllhighscores() {
+    const response = await highscoresFetch();
+    highscores.scores = await response;
   }
 
   async function fetchHighscore() {
@@ -291,7 +299,13 @@
 
 <svelte:window on:keyup={changeDirection} />
 
-<canvas id="board" width="450" height="450" bind:this={board} class="game-board">
+<canvas
+  id="board"
+  width="450"
+  height="450"
+  bind:this={board}
+  class="game-board"
+>
   Din webbläsare stödjer inte HTML5 canvas tag.
 </canvas>
 <section id="scores">
